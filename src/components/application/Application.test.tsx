@@ -2,11 +2,14 @@ import { render, screen } from "@testing-library/react";
 import { Application } from "./Application";
 
 
-describe.only('Application', () => {
+describe('Application', () => {
     it('should render correctly', () => {
         render(<Application/>)
-        const textBox = screen.getByRole('textbox', {name: /name/i})
-        expect(textBox).toBeInTheDocument()
+        const nameElement1 = screen.getByRole('textbox', {name: /name/i})
+        expect(nameElement1).toBeInTheDocument()
+
+        const nameElement2 = screen.getByPlaceholderText('Fullname');
+        expect(nameElement2).toBeInTheDocument()
 
         const textareaElemet  =  screen.getByRole('textbox', {name: /bio/i})
         expect(textareaElemet).toBeInTheDocument()
@@ -23,5 +26,13 @@ describe.only('Application', () => {
         const sectionHeading = screen.getByRole('heading', {name: /section 1/i, level: 2})
         expect(sectionHeading).toBeInTheDocument();
 
+        const paragrapthText1 = screen.getByText('mandatory', {exact: false});
+        expect(paragrapthText1).toBeInTheDocument()
+
+        const paragrapthText2 = screen.getByText(/mandatory/i);
+        expect(paragrapthText2).toBeInTheDocument()
+
+        const paragrapthText3 = screen.getByText((content) => content.toLowerCase().endsWith('mandatory'));
+        expect(paragrapthText3).toBeInTheDocument()
     })
 })

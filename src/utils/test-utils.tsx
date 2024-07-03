@@ -1,16 +1,18 @@
-import { cleanup, render } from "@testing-library/react";
+import { cleanup, render, RenderOptions } from "@testing-library/react";
+import {ReactElement} from 'react'
+import { DummyProvider } from "../providers/DummyProvider";
+
 
 afterEach(() => {
   cleanup();
 });
 
-function customRender(ui: React.ReactElement, options = {}) {
-  return render(ui, {
-    // wrap provider(s) here if needed
-    wrapper: ({ children }) => children,
-    ...options,
-  });
-}
+const customRender = (
+    ui: ReactElement,
+    options?: Omit<RenderOptions, 'wrapper'>,
+  ) => render(ui, {wrapper: DummyProvider, ...options})
+  
+
 
 export * from "@testing-library/react";
 export { default as userEvent } from "@testing-library/user-event";
